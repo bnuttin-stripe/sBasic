@@ -18,7 +18,7 @@ export const css = {
     },
     title:{
         fontSize: 28,
-
+        marginBottom: 20
     },
     button: {
         backgroundColor: '#533AFD',

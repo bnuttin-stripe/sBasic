@@ -53,7 +53,6 @@ export default function App() {
   };
 
   const initializeReader = async () => {
-    console.log("Starting reader software");
     const { error, reader } = await initialize();
     if (reader) {
       console.log('initializeReader - found reader: ', reader);
@@ -65,17 +64,14 @@ export default function App() {
     setInitialized(true);
   };
 
-  useEffect(() => {
-    console.log("Initialized state changed: ", initialized);
-  }, [initialized]);
-
+  // Terminal hooks and events
   const { discoverReaders, connectReader, disconnectReader } =
     useStripeTerminal({
       onUpdateDiscoveredReaders: (readers) => {
         console.log('onUpdateDiscoveredReaders', readers);
         if (readers.length > 0) {
           setReader(readers[0]);
-          connectAODReader(readers[0]);
+          handleReaderConnection(readers[0]);
         }
       },
       onFinishDiscoveringReaders: (error) => {
@@ -102,24 +98,24 @@ export default function App() {
       },
     });
 
-  const discoverAODReader = async () => {
-    console.log("Discovering AOD reader");
-    // console.log("discoverAODReader", "Disconnecting handoff reader");
-    // try {
-    //   await disconnectReader();
-    // }
-    // catch (error) {
-    //   console.log("discoverAODReader", "Error disconnecting reader: " + error);
-    // }
+  // Discovery and connection
+  const handleReaderDiscovery = async () => {
+    try {
+      await disconnectReader();
+    } catch (error) {
+      Log("Error disconnecting reader: ", error);
+    }
+    
+    console.log("Discovering handoff reader");
     const { error } = await discoverReaders({
       discoveryMethod: 'handoff',
     });
     if (error) {
-      console.log("discoverAODReader", error);
+      console.log("handleReaderDiscovery", error);
     }
   };
 
-  const connectAODReader = async (reader) => {
+  const handleReaderConnection = async (reader) => {
     const { error } = await connectReader({
       reader: reader
     }, 'handoff');
@@ -130,7 +126,7 @@ export default function App() {
     return;
   };
 
-  // PAYMENT INTENTS
+  // Payments
   // Step 1 - create payment intent
   const pay = async (payload, onSuccess) => {
     if (paymentStatus !== 'ready') {
@@ -142,11 +138,11 @@ export default function App() {
       console.log("createPaymentIntent", error);
       return;
     }
-    collectPM(paymentIntent, onSuccess);
+    handleCollectPMForPayment(paymentIntent, onSuccess);
   };
 
   // Step 2 - collect payment method
-  const collectPM = async (pi, onSuccess) => {
+  const handleCollectPMForPayment = async (pi, onSuccess) => {
     let payload = {
       paymentIntent: pi,
       allowRedisplay: 'always',
@@ -158,37 +154,39 @@ export default function App() {
       console.log("collectPaymentMethod", error);
       return;
     }
-    confirmPayment(paymentIntent, onSuccess);
+    handleConfirmPaymentIntent(paymentIntent, onSuccess);
   };
 
   // Step 3 - confirm payment intent and call onSuccess function, passing to it the Payment Intent
-  const confirmPayment = async (pi, onSuccess) => {
+  const handleConfirmPaymentIntent = async (pi, onSuccess) => {
     let payload = {
       paymentIntent: pi
     };
     const { error, paymentIntent } = await confirmPaymentIntent(payload);
     if (error) {
-      console.log("confirmPaymentIntent", error);
+      console.log("handleConfirmPaymentIntentIntent", error);
       return;
     }
-    console.log("confirmPaymentIntent", paymentIntent);
+    console.log("handleConfirmPaymentIntentIntent", paymentIntent);
     if (onSuccess) onSuccess(paymentIntent);
   };
 
   // LIFECYCLE HOOKS
+  // Step 1 - Check permissions
   useEffect(() => {
     checkPermissions();
   }, []);
 
+  // Step 2 - Initialize reader when permissions are granted
   useEffect(() => {
     if (!permissionsValidated) return;
     initializeReader();
   }, [permissionsValidated]);
 
+  // Step 3 - Discover readers when initialized
   useEffect(() => {
-    console.log("Initialized: ", initialized);
     if (initialized) {
-      discoverAODReader();
+      handleReaderDiscovery();
     }
   }, [initialized]);
 
