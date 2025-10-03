@@ -1,7 +1,8 @@
 import { useStripeTerminal } from '@stripe/stripe-terminal-react-native';
 import { useEffect, useState } from 'react';
 import { PermissionsAndroid, Platform, Text, View } from 'react-native';
-import SimplePayment from './SimplePayment';
+import Payment from './Payment';
+import Customer from './Customer';
 import { css } from './styles';
 
 export default function App() {
@@ -19,9 +20,9 @@ export default function App() {
   const [initialized, setInitialized] = useState(false);
   const [reader, setReader] = useState(null);
   const [paymentStatus, setPaymentStatus] = useState('');
+  const [customer, setCustomer] = useState({});
 
   const checkPermissions = async () => {
-    console.log("Checking permissions", "Platform: " + Platform.OS);
     if (Platform.OS == 'android') {
       const cameraPermission = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.CAMERA,
@@ -194,7 +195,9 @@ export default function App() {
     <View style={css.app}>
       <Text style={css.title}>Stripe Terminal React Native Demo</Text>
       <View style={css.container}>
-        <SimplePayment pay={pay} reader={reader} paymentStatus={paymentStatus} />
+        <Text>{customer?.name}</Text>
+        <Customer customer={customer} setCustomer={setCustomer}/>
+        <Payment pay={pay} reader={reader} paymentStatus={paymentStatus} />
       </View>
     </View>
   );

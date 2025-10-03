@@ -24,9 +24,18 @@ export const css = {
         backgroundColor: '#533AFD',
         padding: 15,
         borderRadius: 5,
+        width: 300
     },
     buttonText: {
         color: 'white',
-        fontSize: 20,
-    }
+        fontSize: 16,
+    },
+    dropdown: {
+        height: 50,
+        borderColor: 'gray',
+        borderWidth: 0.5,
+        borderRadius: 8,
+        paddingHorizontal: 8,
+        width: 300
+    },
 };
