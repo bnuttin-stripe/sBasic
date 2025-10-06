@@ -1,5 +1,11 @@
 export const defaults = {
     fontSize: 14,
+    spacing: 35,
+    contentWidth: 340,
+    primary: '#533AFD',
+    secondary: '#d0c9fc',
+    slate: '#061B31',
+    light: '#F6F9FC'
 };
 
 export const css = {
@@ -7,13 +13,12 @@ export const css = {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'flex-start',
-        margin: 30
+        margin: defaults.spacing
     },
     container: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        width: '100%',
     },
     title: {
         fontSize: 26,
@@ -31,29 +36,30 @@ export const css = {
         marginBottom: 5
     },
     instructions: {
-        marginBottom: 40,
+        marginBottom: defaults.spacing,
         borderWidth: 1,
         padding: 8,
         borderRadius: 8,
-        backgroundColor: 'whitesmoke',
-        width: 300
+        backgroundColor: defaults.light,
+        width: defaults.contentWidth,
+        borderColor: defaults.slate
     },
     button: {
-        backgroundColor: '#533AFD',
+        backgroundColor: defaults.primary,
         padding: 15,
         borderRadius: 5,
-        width: 300,
+        width: defaults.contentWidth,
         alignItems: 'center',
-        marginTop: 35,
+        marginTop: defaults.spacing,
         height: 48
     },
     buttonDisabled: {
-        backgroundColor: '#d0c9fcff',
+        backgroundColor: defaults.secondary,
         padding: 15,
         borderRadius: 5,
-        width: 300,
+        width: defaults.contentWidth,
         alignItems: 'center',
-        marginTop: 35,
+        marginTop: defaults.spacing,
         height: 48
     },
     buttonText: {
@@ -61,11 +67,11 @@ export const css = {
         fontSize: 16,
     },
     dropdown: {
-        height: 50,
+        height: 48,
         borderColor: 'gray',
         borderWidth: 0.5,
         borderRadius: 8,
         paddingHorizontal: 8,
-        width: 300,
+        width: defaults.contentWidth,
     },
 };

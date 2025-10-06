@@ -54,7 +54,7 @@ export default function Customer(props) {
         data={customers}
         labelField="name"
         valueField="id"
-        placeholder={isProcessing ? "...Fetching customers" : "Select customer"}
+        placeholder={isProcessing ? "...Fetching customers" : "Select customer (optional)"}
         onChange={handleDropDownChange}
         style={css.dropdown}
       />
