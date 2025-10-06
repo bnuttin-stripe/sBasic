@@ -2,6 +2,7 @@ import { useStripeTerminal } from '@stripe/stripe-terminal-react-native';
 import { useEffect, useState } from 'react';
 import { PermissionsAndroid, Platform, Text, View } from 'react-native';
 import Payment from './Payment';
+import Setup from './Setup';
 import Customer from './Customer';
 import { css } from './styles';
 
@@ -14,13 +15,12 @@ export default function App() {
     confirmPaymentIntent,
     createSetupIntent,
     collectSetupIntentPaymentMethod,
-    confirmSetupIntent,
-    getPaymentMethod,
+    confirmSetupIntent
   } = useStripeTerminal();
   const [initialized, setInitialized] = useState(false);
   const [reader, setReader] = useState(null);
-  const [paymentStatus, setPaymentStatus] = useState('');
-  const [customer, setCustomer] = useState({});
+  const [paymentStatus, setPaymentStatus] = useState('notReady');
+  const [customer, setCustomer] = useState(null);
 
   const checkPermissions = async () => {
     if (Platform.OS == 'android') {
@@ -106,7 +106,7 @@ export default function App() {
     } catch (error) {
       Log("Error disconnecting reader: ", error);
     }
-    
+
     console.log("Discovering handoff reader");
     const { error } = await discoverReaders({
       discoveryMethod: 'handoff',
@@ -152,7 +152,7 @@ export default function App() {
 
     const { error, paymentIntent } = await collectPaymentMethod(payload);
     if (error) {
-      console.log("collectPaymentMethod", error);
+      console.log("handleCollectPMForPayment", error);
       return;
     }
     handleConfirmPaymentIntent(paymentIntent, onSuccess);
@@ -170,6 +170,44 @@ export default function App() {
     }
     console.log("handleConfirmPaymentIntentIntent", paymentIntent);
     if (onSuccess) onSuccess(paymentIntent);
+  };
+
+  // Setup future payments
+  // Step 1 - create setup intent
+  const setup = async (customerId, onSuccess) => {
+    const payload = customerId ? { customer: customerId } : {};
+    const { error, setupIntent } = await createSetupIntent(payload);
+    if (error) {
+      Log("createSetupIntent", error);
+      throw error;
+    }
+    return handleCollectPMForSetup(setupIntent, onSuccess);
+  };
+
+  // Step 2 - collect payment method
+  const handleCollectPMForSetup = async (si, onSuccess) => {
+    const { setupIntent, error } = await collectSetupIntentPaymentMethod({
+      setupIntent: si,
+      allowRedisplay: "always",
+      customerConsentCollected: true
+    });
+    if (error) {
+      Log("handleCollectPMForSetup", error);
+      throw error;
+    }
+    return handleConfirmSetupIntent(setupIntent, onSuccess);
+  };
+
+  // Step 3 - confirm setup intent and call onSuccess function, passing to it the Setup Intent
+  const handleConfirmSetupIntent = async (si, onSuccess) => {
+    const { setupIntent, error } = await confirmSetupIntent({
+      setupIntent: si,
+    });
+    if (error) {
+      Log("confirmSetupIntent", error);
+      throw error;
+    }
+    if (onSuccess) onSuccess(setupIntent);
   };
 
   // LIFECYCLE HOOKS
@@ -193,12 +231,30 @@ export default function App() {
 
   return (
     <View style={css.app}>
-      <Text style={css.title}>Stripe Terminal React Native Demo</Text>
+      <Text style={css.title}>Stripe Terminal Demo</Text>
       <View style={css.container}>
-        <Text>{customer?.name}</Text>
-        <Customer customer={customer} setCustomer={setCustomer}/>
-        <Payment pay={pay} reader={reader} paymentStatus={paymentStatus} />
+        <View style={css.instructions}>
+          <Text style={css.subTitle}>Instructions</Text>
+          <Text style={css.defaultText}>Use this demo to run the following scenarios:</Text>
+          <Text style={css.defaultText}>- Pay $10 with or without a customer</Text>
+          <Text style={css.defaultText}>- If you set a customer, you can also save the card used for the payment to the customer's profile</Text>
+          <Text style={css.defaultText}>- If you set a customer, save a card to their profile without charging it</Text>
+        </View>
+        <Customer customer={customer} setCustomer={setCustomer} />
+        <Payment
+          pay={pay}
+          reader={reader}
+          paymentStatus={paymentStatus}
+          customer={customer}
+        />
+        <Setup
+          setup={setup}
+          reader={reader}
+          paymentStatus={paymentStatus}
+          customer={customer}
+        />
       </View>
+      <Text>Reader Status: {paymentStatus}</Text>
     </View>
   );
 }

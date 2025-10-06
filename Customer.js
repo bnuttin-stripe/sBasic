@@ -58,7 +58,6 @@ export default function Customer(props) {
         onChange={handleDropDownChange}
         style={css.dropdown}
       />
-      {/* <Text>{props.customer?.name || 'Guest'}</Text> */}
     </View>
   );
 }

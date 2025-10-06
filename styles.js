@@ -1,5 +1,5 @@
 export const defaults = {
-    fontSize: 16,
+    fontSize: 14,
 };
 
 export const css = {
@@ -7,24 +7,54 @@ export const css = {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'flex-start',
-        margin: 20
+        margin: 30
     },
     container: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        borderWidth: 1,
         width: '100%',
     },
-    title:{
-        fontSize: 28,
-        marginBottom: 20
+    title: {
+        fontSize: 26,
+        marginBottom: 20,
+        fontWeight: 600
+    },
+    subTitle: {
+        fontSize: 18,
+        marginBottom: 10,
+        fontWeight: 600
+
+    },
+    defaultText: {
+        fontSize: defaults.fontSize,
+        marginBottom: 5
+    },
+    instructions: {
+        marginBottom: 40,
+        borderWidth: 1,
+        padding: 8,
+        borderRadius: 8,
+        backgroundColor: 'whitesmoke',
+        width: 300
     },
     button: {
         backgroundColor: '#533AFD',
         padding: 15,
         borderRadius: 5,
-        width: 300
+        width: 300,
+        alignItems: 'center',
+        marginTop: 35,
+        height: 48
+    },
+    buttonDisabled: {
+        backgroundColor: '#d0c9fcff',
+        padding: 15,
+        borderRadius: 5,
+        width: 300,
+        alignItems: 'center',
+        marginTop: 35,
+        height: 48
     },
     buttonText: {
         color: 'white',
@@ -36,6 +66,6 @@ export const css = {
         borderWidth: 0.5,
         borderRadius: 8,
         paddingHorizontal: 8,
-        width: 300
+        width: 300,
     },
 };
