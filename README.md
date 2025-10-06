@@ -5,6 +5,8 @@ This project, built using React Native and Expo, aims to show a very simple impl
 
 The app allows the user to take a simple payment, as well as save a card against a customer profile.
 
+Once you clone the repo, run `npm install` in the root directory to install the `node_modules`, and set up your `.env` file.
+
 It relies on a backend, the URL of which is defined in `.env`, to provide the connection token - per the "Set up the server" section of https://docs.stripe.com/terminal/quickstart.
 
 The following code sample is running in our demo backend - it merely takes in the account ID passed by the app, and returns a connection token for that account, so it can be used for multiple demos. If only using for one demo account, initiate `stripe` only once at the top. It also has some routes for basic customer operations (since a customer object is needed to save a card). Adapt as needed.
