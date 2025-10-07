@@ -38,7 +38,7 @@ export const css = {
     instructions: {
         marginBottom: defaults.spacing,
         borderWidth: 1,
-        padding: 8,
+        padding: 10,
         borderRadius: 8,
         backgroundColor: defaults.light,
         width: defaults.contentWidth,

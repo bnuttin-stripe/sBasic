@@ -229,6 +229,12 @@ export default function App() {
     }
   }, [initialized]);
 
+  const camelToTitle = (camelStr) => {
+    const spaced = camelStr.replace(/([a-z])([A-Z])/g, '$1 $2');
+    return spaced.charAt(0).toUpperCase() + spaced.slice(1);
+}
+
+
   return (
     <View style={css.app}>
       <Text style={css.title}>Stripe Terminal Demo</Text>
@@ -254,7 +260,7 @@ export default function App() {
           customer={customer}
         />
       </View>
-      <Text>Reader Status: {paymentStatus}</Text>
+      <Text>Reader Status: {camelToTitle(paymentStatus)}</Text>
     </View>
   );
 }
