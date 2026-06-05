@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
-import { css } from './styles';
+import { css } from '../utils/styles';
 import { faker } from '@faker-js/faker';
 import { Dropdown } from 'react-native-element-dropdown';
 import { api } from './api';

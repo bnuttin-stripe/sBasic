@@ -1,10 +1,12 @@
-import { StripeTerminalProvider } from '@stripe/stripe-terminal-react-native';
 import { useEffect } from 'react';
-import { api } from './api';
+import { registerRootComponent } from 'expo';
+import { StripeTerminalProvider } from '@stripe/stripe-terminal-react-native';
+import { api } from './data/api';
 
+// Components
 import App from './App';
 
-export default function Root() {
+const Root = () => {
   const fetchTokenProvider = async () => {
     try {
       const { secret } = await api.getConnectionToken();
@@ -25,3 +27,7 @@ export default function Root() {
       </StripeTerminalProvider>
   );
 }
+
+export default Root;
+
+registerRootComponent(Root);

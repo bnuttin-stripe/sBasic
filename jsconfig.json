@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "checkJs": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "jsx": "react-native",
+    "noImplicitAny": false
+  },
+  "exclude": ["node_modules"]
+}
