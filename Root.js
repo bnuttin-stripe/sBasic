@@ -21,7 +21,7 @@ const Root = () => {
     fetchTokenProvider();
   }, []);
 
-  return (
+  return ( 
       <StripeTerminalProvider logLevel="error" tokenProvider={fetchTokenProvider}>
         <App />
       </StripeTerminalProvider>

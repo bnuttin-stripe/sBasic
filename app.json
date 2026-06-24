@@ -21,7 +21,9 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.bnuttin.sbasic"
+      "package": "com.bnuttin.sbasic",
+      "minSdkVersion": 26,
+      "targetSdkVersion": 26
     }
   }
 }
