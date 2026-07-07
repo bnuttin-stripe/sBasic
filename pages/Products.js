@@ -35,7 +35,7 @@ export default function Products() {
   }, []);
 
   return (
-    <View style={{ flex: 1, width: '100%' }}>
+    <View style={{ flex: 1 }}>
       <View style={{ padding: 20, paddingBottom: 10 }}>
         <Text style={css.title}>Products</Text>
       </View>

@@ -17,12 +17,12 @@ export const colors = {
 export const css = StyleSheet.create({
     app: {
         flex: 1,
-        alignItems: 'center',
+        alignItems: 'stretch',
         justifyContent: 'flex-start',
     },
     container: {
         flex: 1,
-        alignItems: 'center',
+        alignItems: 'stretch',
         justifyContent: 'center',
     },
     header: {
@@ -36,6 +36,10 @@ export const css = StyleSheet.create({
     title: {
         fontSize: 22,
         fontWeight: '600',
+        color: colors.slate,
+    },
+    text: {
+        fontSize: 16,
         color: colors.slate,
     },
 });
