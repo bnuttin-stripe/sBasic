@@ -12,7 +12,7 @@ export default function Welcome() {
 
     return (<View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', gap: 30, padding: 20 }}>
         <Text style={css.title}>Welcome to sBasic</Text>
-        <Text style={[css.text, { textAlign: 'center' }]}>Use this application as a bootstrap for Stripe Terminal demos, using the React Native SDK.</Text>
+        <Text style={[css.text, { textAlign: 'center', marginBottom: 30 }]}>Use this application as a bootstrap for Stripe Terminal demos, using the React Native SDK.</Text>
         <Button
             action={() => setPage('products')}
             icon={faCartShopping}

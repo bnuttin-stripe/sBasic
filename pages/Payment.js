@@ -38,7 +38,7 @@ export default function Payment(props) {
   }
 
   return (
-    <View>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', gap: 30, padding: 20 }}>
       <Button
         text="Pay $10"
         action={processPayment}
