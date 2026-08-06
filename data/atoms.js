@@ -1,7 +1,7 @@
 import { atom } from 'jotai';
 
 // The easy stuff
-export const pageAtom = atom('welcome');
+export const pageAtom = atom('payment');
 export const logAtom = atom(/** @type {any[]} */ ([]));
 export const productsAtom = atom(/** @type {any[]} */ ([]));
 

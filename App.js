@@ -9,7 +9,6 @@ import { PaymentProvider } from "./contexts/PaymentContext";
 import { useAtom } from 'jotai';
 import { pageAtom } from './data/atoms';
 // Components and pages
-import Welcome from './pages/Welcome';
 import Products from './pages/Products';
 import Payment from './pages/Payment';
 // Utils
@@ -46,12 +45,11 @@ export default function App() {
   return (
     <PaymentProvider>
       <View style={css.app}>
-        <Pressable style={css.header} onPress={() => setPage('welcome')}>
+        <Pressable style={css.header} onPress={() => setPage('payment')}>
           <Text style={[css.title, { color: colors.light }]}>Stripe Terminal</Text>
           <FontAwesomeIcon icon={paymentStatus === 'ready' ? faLink : faLinkSlash} color={colors.light} />
         </Pressable>
         <View style={css.container}>
-          {page === 'welcome' && <Welcome />}
           {page === 'products' && <Products />}
           {page === 'payment' && <Payment paymentStatus={paymentStatus} />}
         </View>

@@ -22,6 +22,7 @@ export const css = StyleSheet.create({
     },
     container: {
         flex: 1,
+        alignSelf: 'stretch',
         alignItems: 'center',
         justifyContent: 'center',
     },

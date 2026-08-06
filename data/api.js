@@ -40,6 +40,22 @@ export const api = {
         return await response.json();
     },
 
+    sendPaymentResult: async (payload) => {
+        const paymentStatus = payload.status;
+        const tier = payload.metadata.tier;
+        console.log('\nSending Payment Result to Websocket\nPayment Status: ' + paymentStatus + '\n Tier: ' + tier);
+        const response = await fetch(backendUrl + '/broadcast/carwash', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                payment: 'success',
+                type: tier,
+            }),
+        })
+    },
+
     getProducts: async () => {
         const response = await fetch(backendUrl + '/products', {
             method: 'GET',

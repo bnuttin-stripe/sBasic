@@ -79,8 +79,9 @@ export default function useStripeTerminalSetup(settings) {
     }
 
     const { error } = await discoverReaders({
-      discoveryMethod: settings.isAOD ? 'appsOnDevices' : 'tapToPay',
-      // simulated: !settings.isAOD
+      // discoveryMethod: settings.isAOD ? 'appsOnDevices' : 'tapToPay',
+      discoveryMethod: 'internet',
+      simulated: true
     });
     if (error) {
       Log("discoverReaders", error);

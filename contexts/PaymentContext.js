@@ -33,8 +33,8 @@ export const PaymentProvider = ({ children }) => {
         const collectResult = await collectPaymentMethod({
             paymentIntent: createResult.paymentIntent,
             allowRedisplay: 'always',
-            updatePaymentIntent: true,
-            requestDynamicCurrencyConversion: true,
+            // updatePaymentIntent: true,
+            // requestDynamicCurrencyConversion: true,
         });
         Log("Collected Payment Method", collectResult);
         if (collectResult.error) {
