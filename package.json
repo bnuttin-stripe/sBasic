@@ -17,6 +17,7 @@
     "@stripe/stripe-terminal-react-native": "^0.0.1-beta.31",
     "expo": "~54.0.12",
     "expo-blur": "~15.0.8",
+    "expo-build-properties": "~1.0.10",
     "expo-status-bar": "~3.0.8",
     "jotai": "^2.20.0",
     "react": "19.1.0",
