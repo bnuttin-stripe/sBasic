@@ -7,7 +7,8 @@ import useStripeTerminalSetup from './hooks/useStripeTerminalSetup';
 import { PaymentProvider } from "./contexts/PaymentContext";
 // Data
 import { useAtom } from 'jotai';
-import { pageAtom } from './data/atoms';
+import { pageAtom, customerAtom } from './data/atoms';
+import { api } from './data/api';
 // Components and pages
 import Products from './pages/Products';
 import Payment from './pages/Payment';
@@ -19,6 +20,7 @@ import { faLink, faLinkSlash } from '@fortawesome/free-solid-svg-icons';
 
 export default function App() {
   const [page, setPage] = useAtom(pageAtom);
+  const [customer, setCustomer] = useAtom(customerAtom);
 
   // Stripe Terminal setup
   const { permissionsValidated } = usePermissions();
@@ -42,16 +44,24 @@ export default function App() {
     }
   }, [initialized]);
 
+  useEffect(() => {
+    api.getCustomers().then(customers => {
+      if (customers.length > 0) {
+        setCustomer(customers[0]);
+      }
+    });
+  }, []);
+
   return (
     <PaymentProvider>
       <View style={css.app}>
-        <Pressable style={css.header} onPress={() => setPage('payment')}>
-          <Text style={[css.title, { color: colors.light }]}>Stripe Terminal</Text>
-          <FontAwesomeIcon icon={paymentStatus === 'ready' ? faLink : faLinkSlash} color={colors.light} />
-        </Pressable>
+        {/* <Pressable style={css.header} onPress={() => setPage('payment')}> */}
+          {/* <Text style={[css.title, { color: colors.light }]}>Stripe Terminal</Text> */}
+          {/* <FontAwesomeIcon icon={paymentStatus === 'ready' ? faLink : faLinkSlash} color={colors.light} />
+        </Pressable> */}
         <View style={css.container}>
           {page === 'products' && <Products />}
-          {page === 'payment' && <Payment paymentStatus={paymentStatus} />}
+          {page === 'payment' && <Payment paymentStatus={paymentStatus} customer={customer} />}
         </View>
       </View>
     </PaymentProvider>

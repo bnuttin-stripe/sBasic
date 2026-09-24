@@ -30,9 +30,9 @@ export const css = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
         padding: defaults.spacing,
-        backgroundColor: colors.primary,
+        backgroundColor: '#000',
     },
     title: {
         fontSize: 22,

@@ -11,6 +11,8 @@ export const settingsAtom = atom({
     currency: 'usd',
 });
 
+export const customerAtom = atom();
+
 // Cart functionality
 
 // Usage:
